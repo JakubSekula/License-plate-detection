@@ -31,7 +31,7 @@ class getBatch():
             array.append(int(root[4][5][3].text.strip()))
             #[xmin, ymin, xmax, ymax]
             inner = {}
-            inner['data'] = array
+            inner['data'] = torch.tensor(array).to(torch.float32)
             img_path = self.annotation_path + grfile.split('.')[0] + ".png"
             inner['image'] = img_path.replace("annotations", "images")
             self.annotations[grfile.split(".")[0][4:]] = inner

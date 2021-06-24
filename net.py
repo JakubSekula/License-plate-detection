@@ -10,6 +10,7 @@ class AlexNet(nn.Module):
         if(checkpoint):
             self.net.load_state_dict(torch.load(checkpoint_path))
             self.net.eval()
+            print("Loaded")
         self.net.cuda()
         self.net.eval()
     def forward(self, x, **kwargs):
