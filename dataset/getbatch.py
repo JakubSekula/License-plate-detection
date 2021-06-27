@@ -13,9 +13,9 @@ from torchvision import transforms
 import xml.etree.ElementTree as ET
 
 class getBatch():    
-    def __init__(self, an_path="/storage/brno6/home/jakubsekula/License-plate-detection/dataset/annotations/",
-                       im_path="/storage/brno6/home/jakubsekula/License-plate-detection/dataset/images/"):
+    def __init__(self, an_path, im_path):
         self.annotation_path = an_path
+        self.iterator = 0
         self.images_path = im_path
         self.files = listdir(self.annotation_path)
         print("found " + str(len(self.files)) + " files")
@@ -45,6 +45,17 @@ class getBatch():
             self.annotations[im]['imageTensor'] = image
         return image
 
+    def getPicByPath(self, path):
+        image = cv2.imread(path)
+        transformer = transforms.ToTensor()
+        image = transformer(image)
+        return image
+
+    def getTest(self):
+        index = self.iterator
+        self.iterator += 1
+        return self.annotations[str(index)]
+
     def getNext(self):
-        index = random.randint(0, 432)
+        index = random.randint(0, len(self.annotations.keys()) - 10)
         return self.annotations[str(index)] 
